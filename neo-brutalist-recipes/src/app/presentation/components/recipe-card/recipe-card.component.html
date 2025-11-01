@@ -1,0 +1,51 @@
+<article class="recipe-card">
+  <header class="recipe-card__header">
+    <div class="recipe-card__title">
+      <span class="recipe-card__eyebrow">{{ recipe.mealType | titlecase }} routine</span>
+      <h2>{{ recipe.title }}</h2>
+    </div>
+    <span class="recipe-card__badge">{{ recipe.totalTimeMinutes }}′ total</span>
+  </header>
+
+  <p class="recipe-card__summary">
+    {{ recipe.summary }}
+  </p>
+
+  <div class="recipe-card__grid">
+    <section>
+      <h3>Protein</h3>
+      <p class="recipe-card__highlight">{{ recipe.proteinSource }}</p>
+    </section>
+    <section>
+      <h3>Serves</h3>
+      <p class="recipe-card__highlight">{{ recipe.serves }}</p>
+    </section>
+    <section>
+      <h3>Prep</h3>
+      <p>{{ recipe.prepTimeMinutes }} minutes</p>
+    </section>
+    <section>
+      <h3>Cook</h3>
+      <p>{{ recipe.cookTimeMinutes }} minutes</p>
+    </section>
+  </div>
+
+  <section>
+    <h3>Ingredients</h3>
+    <ul>
+      <li *ngFor="let ingredient of recipe.ingredients">
+        <span class="ingredient-quantity">{{ ingredient.quantity }}</span>
+        <span class="ingredient-name">{{ ingredient.name }}</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Steps</h3>
+    <ol>
+      <li *ngFor="let step of recipe.steps">
+        {{ step }}
+      </li>
+    </ol>
+  </section>
+</article>

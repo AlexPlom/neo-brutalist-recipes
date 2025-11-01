@@ -1,0 +1,117 @@
+.recipe-card {
+  background: var(--surface);
+  border: 3px solid var(--ink);
+  border-radius: 32px;
+  box-shadow: 12px 12px 0 var(--shadow);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.recipe-card:hover {
+  transform: translate(-6px, -6px);
+  box-shadow: 18px 18px 0 var(--shadow);
+}
+
+.recipe-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.recipe-card__title h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  letter-spacing: -0.02em;
+}
+
+.recipe-card__eyebrow {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--ink-muted);
+}
+
+.recipe-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--surface);
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.recipe-card__summary {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.recipe-card__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.recipe-card__grid section {
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  padding: 1rem;
+  background: var(--surface-accent);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.recipe-card__grid h3,
+.recipe-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.recipe-card__highlight {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+li {
+  position: relative;
+}
+
+.ingredient-quantity {
+  font-weight: 700;
+}
+
+.ingredient-name {
+  margin-left: 0.4rem;
+}
+
+@media (max-width: 640px) {
+  .recipe-card {
+    border-radius: 24px;
+    box-shadow: 8px 8px 0 var(--shadow);
+  }
+
+  .recipe-card:hover {
+    transform: none;
+    box-shadow: 8px 8px 0 var(--shadow);
+  }
+}

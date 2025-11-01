@@ -1,0 +1,64 @@
+<section class="hero">
+  <p class="hero__tag">Neo-brutalist table</p>
+  <h1>Bold Balkan flavours, stripped back.</h1>
+  <p class="hero__lead">
+    Three simple Bulgarian-inspired dishes, each anchored by a single protein and ready for weeknight cooking.
+  </p>
+</section>
+
+<ng-container *ngIf="recipes().length > 0; else loading">
+  <section
+    class="recipes-interactive"
+    [class.recipes-interactive--active]="hasSelection()"
+  >
+    <div
+      class="recipes-interactive__mini"
+      *ngIf="hasSelection()"
+    >
+      <button
+        *ngFor="let recipe of otherRecipes(); trackBy: trackByRecipe"
+        type="button"
+        class="recipes-mini-card"
+        (click)="selectRecipe(recipe.id)"
+      >
+        <span class="recipes-mini-card__title">{{ recipe.title }}</span>
+        <span class="recipes-mini-card__time">{{ recipe.totalTimeMinutes }} min</span>
+      </button>
+    </div>
+
+    <div
+      class="recipes-interactive__grid"
+      *ngIf="!hasSelection(); else expandedView"
+    >
+      <button
+        *ngFor="let recipe of recipes(); trackBy: trackByRecipe"
+        type="button"
+        class="recipes-card-trigger"
+        (click)="selectRecipe(recipe.id)"
+      >
+        <app-recipe-card [recipe]="recipe" />
+      </button>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #expandedView>
+  <ng-container *ngIf="featuredRecipe() as recipe">
+    <div class="recipes-interactive__main">
+      <div class="recipes-interactive__main-card">
+        <app-recipe-card [recipe]="recipe" />
+      </div>
+      <button
+        type="button"
+        class="recipes-interactive__reset"
+        (click)="selectRecipe(recipe.id)"
+      >
+        Back to all recipes
+      </button>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #loading>
+  <p class="loading">Loading fresh ideas...</p>
+</ng-template>
