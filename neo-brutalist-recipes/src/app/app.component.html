@@ -4,16 +4,19 @@
       <span class="logo-mark">NB</span>
       <span class="logo-text">Neo Brutalist Kitchen</span>
     </a>
-    <nav class="app-nav">
-      <a
-        href="https://en.wikipedia.org/wiki/Bulgarian_cuisine"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Bulgarian cuisine ↗
-      </a>
-      <a href="mailto:hi@neobrutalist.kitchen">Say hello ↗</a>
-    </nav>
+    <div class="app-header__actions">
+      <!-- <nav class="app-nav">
+        <a
+          href="https://en.wikipedia.org/wiki/Bulgarian_cuisine"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Bulgarian cuisine ->
+        </a>
+        <a href="mailto:hi@neobrutalist.kitchen">Say hello -></a>
+      </nav> -->
+      <app-theme-switcher class="app-theme-switcher"></app-theme-switcher>
+    </div>
   </header>
 
   <main>
@@ -21,6 +24,6 @@
   </main>
 
   <footer class="app-footer">
-    Crafted with neo-brutalist love • {{ currentYear }}
+    Crafted with neo-brutalist love - {{ currentYear }}
   </footer>
 </div>

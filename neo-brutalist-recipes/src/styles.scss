@@ -8,6 +8,7 @@
   --ink: #1c1c1c;
   --ink-muted: rgba(28, 28, 28, 0.58);
   --shadow: rgba(28, 28, 28, 0.9);
+  --theme-transition: 320ms;
   color-scheme: light;
 }
 
@@ -25,6 +26,39 @@ body {
   font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 400;
   letter-spacing: -0.005em;
+  transition:
+    background var(--theme-transition) ease,
+    color var(--theme-transition) ease;
+}
+
+body.theme-animated .app-logo,
+body.theme-animated .app-nav a,
+body.theme-animated .theme-switcher__option,
+body.theme-animated .recipe-card,
+body.theme-animated .hero {
+  transition-duration: var(--theme-transition);
+}
+
+body.theme-bulgarian {
+  --background: #f5f1e6;
+  --surface: #fffdf6;
+  --surface-accent: #fef3c7;
+  --surface-bright: #ffe066;
+  --ink: #1c1c1c;
+  --ink-muted: rgba(28, 28, 28, 0.58);
+  --shadow: rgba(28, 28, 28, 0.9);
+  color-scheme: light;
+}
+
+body.theme-rose-pine {
+  --background: #faf4ed;
+  --surface: #faf4ed;
+  --surface-accent: #faf4ed;
+  --surface-bright: #ebbcba;
+  --ink: #e0def4;
+  --ink-muted: rgba(224, 222, 244, 0.65);
+  --shadow: rgba(16, 13, 31, 0.85);
+  color-scheme: light;
 }
 
 a {

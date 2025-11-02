@@ -9,7 +9,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 1.5rem;
   padding-bottom: 0.75rem;
 }
@@ -44,6 +43,14 @@
   font-size: 0.95rem;
 }
 
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-left: auto;
+}
+
 .app-nav {
   display: inline-flex;
   flex-wrap: wrap;
@@ -65,6 +72,10 @@
   background: var(--surface-bright);
 }
 
+.app-theme-switcher {
+  flex: none;
+}
+
 .app-footer {
   margin-top: 2rem;
   font-size: 0.85rem;
@@ -79,8 +90,13 @@
     justify-content: center;
   }
 
-  .app-nav {
+  .app-header__actions {
     width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .app-nav {
     justify-content: center;
   }
 }
