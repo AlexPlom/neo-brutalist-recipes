@@ -15,6 +15,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - internal
     volumes:
       - recipes-data:/var/lib/postgresql/data
 
@@ -37,14 +39,17 @@ services:
     - traefik.http.routers.recipes.tls.certresolver=mytlschallenge
 
     # Map to internal port
-    - traefik.http.services.recipes.loadbalancer.server.port=80
+    - traefik.http.services.recipes.loadbalancer.server.port=8000
     networks:
       - proxy
+      - internal 
     depends_on:
       db:
         condition: service_healthy
 
 networks:
+  internal:
+    driver: bridge
   proxy:
     external: true
 
