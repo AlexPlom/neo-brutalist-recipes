@@ -30,7 +30,7 @@ interface ApiRecipesResponse {
   readonly recipes: ApiRecipeDto[];
 }
 
-const DEFAULT_API_BASE = 'http://72.61.181.106:8000';
+const DEFAULT_API_BASE = 'https://zeroeighty.cloud';
 
 @Injectable({
   providedIn: 'root',

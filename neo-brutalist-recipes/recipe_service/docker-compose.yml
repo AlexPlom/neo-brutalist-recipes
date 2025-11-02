@@ -33,7 +33,7 @@ services:
     - traefik.docker.network=proxy
 
     # Root domain → recipes
-    - traefik.http.routers.recipes.rule=Host(`zeroeighty.cloud`)
+    - traefik.http.routers.recipes.rule=Host(`${RECIPES_SUBDOMAIN}.${DOMAIN_NAME}`)
     - traefik.http.routers.recipes.entrypoints=web,websecure
     - traefik.http.routers.recipes.tls=true
     - traefik.http.routers.recipes.tls.certresolver=mytlschallenge
