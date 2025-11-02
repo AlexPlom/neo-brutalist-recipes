@@ -26,9 +26,27 @@ services:
       DATABASE_URL: postgresql+psycopg2://recipes:recipes@db:5435/recipes
     ports:
       - "8000:8000"
+    labels:
+    - traefik.enable=true
+    - traefik.docker.network=proxy
+
+    # Root domain → recipes
+    - traefik.http.routers.recipes.rule=Host(`zeroeighty.cloud`)
+    - traefik.http.routers.recipes.entrypoints=web,websecure
+    - traefik.http.routers.recipes.tls=true
+    - traefik.http.routers.recipes.tls.certresolver=mytlschallenge
+
+    # Map to internal port
+    - traefik.http.services.recipes.loadbalancer.server.port=80
+    networks:
+      - proxy
     depends_on:
       db:
         condition: service_healthy
+
+networks:
+  proxy:
+    external: true
 
 volumes:
   recipes-data:

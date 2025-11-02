@@ -30,6 +30,8 @@ interface ApiRecipesResponse {
   readonly recipes: ApiRecipeDto[];
 }
 
+const DEFAULT_API_BASE = 'http://72.61.181.106:8000';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -52,10 +54,16 @@ export class ApiRecipeRepository implements RecipeRepository {
   }
 
   private resolveBaseUrl(): string {
+    const metaEnv = (import.meta as { env?: Record<string, string | undefined> })?.env;
+    const globalEnv = globalThis as Record<string, unknown>;
+
     const raw =
-      import.meta.env['NG_APP_RECIPES_API'] ??
-      import.meta.env['NG_APP_RECIPES_API_URL'] ??
-      'http://localhost:8000';
+      (metaEnv?.['NG_APP_RECIPES_API'] as string | undefined) ??
+      (metaEnv?.['NG_APP_RECIPES_API_URL'] as string | undefined) ??
+      (globalEnv['NG_APP_RECIPES_API'] as string | undefined) ??
+      (globalEnv['NG_APP_RECIPES_API_URL'] as string | undefined) ??
+      DEFAULT_API_BASE;
+
     return raw.endsWith('/') ? raw.slice(0, -1) : raw;
   }
 
