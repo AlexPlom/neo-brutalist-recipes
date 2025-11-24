@@ -27,7 +27,7 @@ class RecipeState(TypedDict, total=False):
 def _build_prompt(state: RecipeState) -> RecipeState:
     count = state["recipe_count"]
     country = state.get("country_code", "BG")
-    cuisine = "Greek" if country == "GR" else "Bulgarian or Balkan"
+    cuisine = "Greek" if country == "GR" else "Bulgarian"
     
     prompt = f"""You are a culinary assistant specializing in {cuisine} weeknight cooking.
 Generate {count} distinct {cuisine} recipes that:
