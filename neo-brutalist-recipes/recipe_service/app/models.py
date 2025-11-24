@@ -22,6 +22,7 @@ class Recipe(Base):
     cook_time_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
     ingredients: Mapped[list[dict[str, str]]] = mapped_column(JSONB, nullable=False)
     instructions: Mapped[list[str]] = mapped_column(JSONB, nullable=False)
+    country_code: Mapped[str] = mapped_column(String(2), nullable=False, default="BG")
     created_for: Mapped[date] = mapped_column(Date, index=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, nullable=False, default=datetime.utcnow

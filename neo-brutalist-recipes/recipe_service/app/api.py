@@ -13,8 +13,16 @@ settings = get_settings()
 
 
 @router.get("/recipes", response_model=RecipesResponse)
-def read_recipes(db: Session = Depends(get_db)) -> RecipesResponse:
+def read_recipes(
+    country: str = "BG", db: Session = Depends(get_db)
+) -> RecipesResponse:
     """Return the recipes for the current day, generating them if missing."""
     today = datetime.now(tz=settings.timezone).date()
-    recipes = ensure_recipes_for_date(db, today)
+    
+    # Enforce 3 recipes for Greek cuisine as requested
+    count = 3 if country == "GR" else settings.recipe_count
+    
+    recipes = ensure_recipes_for_date(
+        db, today, country_code=country, recipe_count_override=count
+    )
     return RecipesResponse(date=today, recipes=recipes)

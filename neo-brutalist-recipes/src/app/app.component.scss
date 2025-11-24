@@ -1,22 +1,35 @@
+// ... existing styles ...
+
 .app-shell {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  background-color: var(--background);
+  color: var(--ink);
 }
 
 .app-header {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border-bottom: 3px solid var(--ink);
+  background-color: var(--surface);
+  gap: 1.5rem;
+}
+
+.header-start {
+  display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding-bottom: 0.75rem;
 }
 
 .app-logo {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
+  -webkit-appearance: none;
+  appearance: none;
   border: 3px solid var(--ink);
   border-radius: 999px;
   padding: 0.6rem 1.2rem;
@@ -25,6 +38,22 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--shadow);
+    background: var(--surface-accent);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 4px;
+  }
 }
 
 .logo-mark {
@@ -43,60 +72,85 @@
   font-size: 0.95rem;
 }
 
-.app-header__actions {
+.country-toggle {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  margin-left: auto;
-}
-
-.app-nav {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.app-nav a {
-  border: 2px solid var(--ink);
-  border-radius: 999px;
-  padding: 0.45rem 1.15rem;
-  background: var(--surface-accent);
-  font-weight: 600;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--surface);
+  border: 3px solid var(--ink);
+  cursor: pointer;
   transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  padding: 0;
   box-shadow: 6px 6px 0 var(--shadow);
+  color: inherit;
+
+  &:hover,
+  &:focus-visible {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 var(--shadow);
+    background: var(--surface-accent);
+  }
+
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  &__flag {
+    font-size: 24px;
+    line-height: 1;
+  }
 }
 
-.app-nav a:hover {
-  transform: translate(-3px, -3px);
-  background: var(--surface-bright);
-}
-
-.app-theme-switcher {
-  flex: none;
+main {
+  width: min(1100px, 94vw);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2.5rem) 0 3.5rem;
 }
 
 .app-footer {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  padding: 2rem;
+  border-top: 3px solid var(--ink);
+  background-color: var(--surface);
+  text-align: center;
+  font-weight: 500;
   color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 600px) {
-  .app-logo {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .app-header__actions {
-    width: 100%;
-    justify-content: center;
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
     gap: 1rem;
   }
 
-  .app-nav {
-    justify-content: center;
+  .header-start {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .app-logo {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .country-toggle {
+    width: 100%;
+    border-radius: 999px; // Make it a pill on mobile if full width
+    height: auto;
+    padding: 0.6rem 1.2rem;
   }
 }

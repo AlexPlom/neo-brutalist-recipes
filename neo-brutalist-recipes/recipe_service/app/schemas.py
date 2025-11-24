@@ -23,6 +23,7 @@ class RecipeBase(BaseModel):
 
 class RecipeRead(RecipeBase):
     id: int
+    country_code: str
     created_for: date
 
 

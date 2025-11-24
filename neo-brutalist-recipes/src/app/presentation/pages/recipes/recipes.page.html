@@ -1,41 +1,32 @@
-<section class="hero">
-  <p class="hero__tag">Neo-brutalist table</p>
-  <h1>Bold Balkan flavours, stripped back.</h1>
-  <p class="hero__lead">
-    Three simple Bulgarian-inspired dishes, each anchored by a single protein and ready for weeknight cooking.
-  </p>
+<section class="recipes">
+  <div class="recipes__inner">
+    <div class="hero">
+      <div class="hero__top">
+        <p class="hero__tag">Neo-brutalist table</p>
+        <p class="hero__tag">Neo-brutalist table</p>
+      </div>
+      <h1>Bold {{ selectedCountry() === 'BG' ? 'Balkan' : 'Greek' }} flavours, stripped back.</h1>
+      <p class="hero__lead">
+        Three simple {{ selectedCountry() === 'BG' ? 'Bulgarian' : 'Greek' }}-inspired dishes, each anchored by a single
+        protein and ready for weeknight cooking.
+      </p>
+    </div>
+  </div>
 </section>
 
 <ng-container *ngIf="recipes().length > 0; else loading">
-  <section
-    class="recipes-interactive"
-    [class.recipes-interactive--active]="hasSelection()"
-  >
-    <div
-      class="recipes-interactive__mini"
-      *ngIf="hasSelection()"
-    >
-      <button
-        *ngFor="let recipe of otherRecipes(); trackBy: trackByRecipe"
-        type="button"
-        class="recipes-mini-card"
-        (click)="selectRecipe(recipe.id)"
-      >
+  <section class="recipes-interactive" [class.recipes-interactive--active]="hasSelection()">
+    <div class="recipes-interactive__mini" *ngIf="hasSelection()">
+      <button *ngFor="let recipe of otherRecipes(); trackBy: trackByRecipe" type="button" class="recipes-mini-card"
+        (click)="selectRecipe(recipe.id)">
         <span class="recipes-mini-card__title">{{ recipe.title }}</span>
         <span class="recipes-mini-card__time">{{ recipe.totalTimeMinutes }} min</span>
       </button>
     </div>
 
-    <div
-      class="recipes-interactive__grid"
-      *ngIf="!hasSelection(); else expandedView"
-    >
-      <button
-        *ngFor="let recipe of recipes(); trackBy: trackByRecipe"
-        type="button"
-        class="recipes-card-trigger"
-        (click)="selectRecipe(recipe.id)"
-      >
+    <div class="recipes-interactive__grid" *ngIf="!hasSelection(); else expandedView">
+      <button *ngFor="let recipe of recipes(); trackBy: trackByRecipe" type="button" class="recipes-card-trigger"
+        (click)="selectRecipe(recipe.id)">
         <app-recipe-card [recipe]="recipe" />
       </button>
     </div>
@@ -48,13 +39,14 @@
       <div class="recipes-interactive__main-card">
         <app-recipe-card [recipe]="recipe" />
       </div>
-      <button
-        type="button"
-        class="recipes-interactive__reset"
-        (click)="selectRecipe(recipe.id)"
-      >
-        Back to all recipes
-      </button>
+      <div class="recipes-interactive__actions">
+        <button type="button" class="recipes-interactive__download" (click)="download(recipe)">
+          Download Markdown
+        </button>
+        <button type="button" class="recipes-interactive__reset" (click)="clearSelection()">
+          Back to all recipes
+        </button>
+      </div>
     </div>
   </ng-container>
 </ng-template>

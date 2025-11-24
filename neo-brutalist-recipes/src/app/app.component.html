@@ -1,21 +1,15 @@
 <div class="app-shell">
   <header class="app-header">
-    <a class="app-logo" routerLink="/">
-      <span class="logo-mark">NB</span>
-      <span class="logo-text">Neo Brutalist Kitchen</span>
-    </a>
-    <div class="app-header__actions">
-      <!-- <nav class="app-nav">
-        <a
-          href="https://en.wikipedia.org/wiki/Bulgarian_cuisine"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Bulgarian cuisine ->
-        </a>
-        <a href="mailto:hi@neobrutalist.kitchen">Say hello -></a>
-      </nav> -->
-      <app-theme-switcher class="app-theme-switcher"></app-theme-switcher>
+    <div class="header-start">
+      <button class="app-logo" type="button" (click)="cycleTheme($event)">
+        <span class="logo-mark">NB</span>
+        <span class="logo-text">Neo Brutalist Kitchen</span>
+      </button>
+
+      <button class="country-toggle" type="button" (click)="countryService.toggleCountry()"
+        [attr.aria-label]="countryService.selectedCountry() === 'BG' ? 'Switch to Greek recipes' : 'Switch to Bulgarian recipes'">
+        <span class="country-toggle__flag">{{ countryService.selectedCountry() === 'BG' ? '🇧🇬' : '🇬🇷' }}</span>
+      </button>
     </div>
   </header>
 
@@ -24,6 +18,6 @@
   </main>
 
   <footer class="app-footer">
-    Crafted with neo-brutalist love - {{ currentYear }}
+    <b>Life over Profit © 2025&nbsp;</b>
   </footer>
 </div>

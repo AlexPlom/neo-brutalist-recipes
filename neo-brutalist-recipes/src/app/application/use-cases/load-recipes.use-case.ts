@@ -7,9 +7,9 @@ import { RecipeRepository } from '../../domain/repositories/recipe.repository';
   providedIn: 'root',
 })
 export class LoadRecipesUseCase {
-  constructor(private readonly recipeRepository: RecipeRepository) {}
+  constructor(private readonly recipeRepository: RecipeRepository) { }
 
-  execute(): Observable<Recipe[]> {
-    return this.recipeRepository.getAll();
+  execute(country: string = 'BG'): Observable<Recipe[]> {
+    return this.recipeRepository.getAll(country);
   }
 }

@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 class RecipeState(TypedDict, total=False):
     target_date: str
+    country_code: str
     recipe_count: int
     prompt: str
     raw_response: str
@@ -25,8 +26,11 @@ class RecipeState(TypedDict, total=False):
 
 def _build_prompt(state: RecipeState) -> RecipeState:
     count = state["recipe_count"]
-    prompt = f"""You are a culinary assistant specializing in Balkan weeknight cooking.
-Generate {count} distinct Bulgarian or Balkan recipes that:
+    country = state.get("country_code", "BG")
+    cuisine = "Greek" if country == "GR" else "Bulgarian or Balkan"
+    
+    prompt = f"""You are a culinary assistant specializing in {cuisine} weeknight cooking.
+Generate {count} distinct {cuisine} recipes that:
 - are realistic to prepare on a weeknight (total prep + cook time must be 20-45 minutes)
 - highlight regional flavors and traditional techniques
 - each use exactly one primary protein source (for example: chicken, pork, beef, lamb, fish, beans)
@@ -152,10 +156,11 @@ graph.add_edge("parse", END)
 compiled_graph = graph.compile()
 
 
-def generate_recipes_for_date(target_date: date, recipe_count: int) -> List[Dict[str, Any]]:
+def generate_recipes_for_date(target_date: date, recipe_count: int, country_code: str = "BG") -> List[Dict[str, Any]]:
     """Run the LangGraph pipeline to create recipes for a specific date."""
     state_input: RecipeState = {
         "target_date": target_date.isoformat(),
+        "country_code": country_code,
         "recipe_count": recipe_count,
     }
     result = compiled_graph.invoke(state_input)

@@ -4,6 +4,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { RecipeRepository } from '../../domain/repositories/recipe.repository';
 import { Recipe, MealType } from '../../domain/models/recipe';
 import { Ingredient } from '../../domain/models/ingredient';
+import { environment } from '../../../environments/environment';
 
 type ApiMealType = 'breakfast' | 'lunch' | 'dinner';
 
@@ -39,31 +40,26 @@ export class ApiRecipeRepository implements RecipeRepository {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = this.resolveBaseUrl();
 
-  getAll(): Observable<Recipe[]> {
-    return this.http.get<ApiRecipesResponse>(`${this.baseUrl}/recipes`).pipe(
-      map((response) => response.recipes.map((recipe) => this.mapRecipe(recipe))),
-      catchError((error) =>
-        throwError(
-          () =>
-            new Error(
-              `Failed to load recipes from API (${error.status ?? 'network'}).`
-            )
+  getAll(country: string = 'BG'): Observable<Recipe[]> {
+    return this.http
+      .get<ApiRecipesResponse>(`${this.baseUrl}/recipes`, {
+        params: { country },
+      })
+      .pipe(
+        map((response) => response.recipes.map((recipe) => this.mapRecipe(recipe))),
+        catchError((error) =>
+          throwError(
+            () =>
+              new Error(
+                `Failed to load recipes from API (${error.status ?? 'network'}).`
+              )
+          )
         )
-      )
-    );
+      );
   }
 
   private resolveBaseUrl(): string {
-    const metaEnv = (import.meta as { env?: Record<string, string | undefined> })?.env;
-    const globalEnv = globalThis as Record<string, unknown>;
-
-    const raw =
-      (metaEnv?.['NG_APP_RECIPES_API'] as string | undefined) ??
-      (metaEnv?.['NG_APP_RECIPES_API_URL'] as string | undefined) ??
-      (globalEnv['NG_APP_RECIPES_API'] as string | undefined) ??
-      (globalEnv['NG_APP_RECIPES_API_URL'] as string | undefined) ??
-      DEFAULT_API_BASE;
-
+    const raw = environment.recipesApi;
     return raw.endsWith('/') ? raw.slice(0, -1) : raw;
   }
 

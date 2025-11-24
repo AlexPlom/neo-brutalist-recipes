@@ -63,28 +63,38 @@ def _model_to_schema(model: Recipe) -> RecipeRead:
         cook_time_minutes=model.cook_time_minutes,
         ingredients=model.ingredients,
         instructions=model.instructions,
+        country_code=model.country_code,
         created_for=model.created_for,
     )
 
 
-def fetch_recipes(db: Session, target_date: date) -> List[RecipeRead]:
+def fetch_recipes(db: Session, target_date: date, country_code: str = "BG") -> List[RecipeRead]:
     """Return stored recipes for a given date."""
     result = db.execute(
-        select(Recipe).where(Recipe.created_for == target_date).order_by(Recipe.id)
+        select(Recipe)
+        .where(Recipe.created_for == target_date)
+        .where(Recipe.country_code == country_code)
+        .order_by(Recipe.id)
     )
     return [_model_to_schema(row[0]) for row in result.all()]
 
 
-def ensure_recipes_for_date(db: Session, target_date: date) -> List[RecipeRead]:
+def ensure_recipes_for_date(
+    db: Session,
+    target_date: date,
+    country_code: str = "BG",
+    recipe_count_override: int | None = None,
+) -> List[RecipeRead]:
     """Retrieve recipes if present, otherwise generate and persist them."""
-    recipes = fetch_recipes(db, target_date)
+    recipes = fetch_recipes(db, target_date, country_code)
     if recipes:
         return recipes
 
-    generated = generate_recipes_for_date(target_date, settings.recipe_count)
+    count = recipe_count_override if recipe_count_override is not None else settings.recipe_count
+    generated = generate_recipes_for_date(target_date, count, country_code)
     persisted: List[RecipeRead] = []
 
-    for item in generated[: settings.recipe_count]:
+    for item in generated[:count]:
         ingredients_raw = item.get("ingredients")
         instructions_raw = item.get("instructions")
         if not isinstance(ingredients_raw, list) or not ingredients_raw:
@@ -112,6 +122,7 @@ def ensure_recipes_for_date(db: Session, target_date: date) -> List[RecipeRead]:
             cook_time_minutes=cook_time,
             ingredients=ingredients,
             instructions=instructions,
+            country_code=country_code,
             created_for=target_date,
         )
         db.add(recipe_model)

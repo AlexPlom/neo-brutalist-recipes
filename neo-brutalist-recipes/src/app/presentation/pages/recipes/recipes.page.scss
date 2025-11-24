@@ -1,7 +1,18 @@
+.recipes {
+  display: grid;
+  place-items: center;
+  padding-inline: clamp(1rem, 5vw, 2rem);
+}
+
+.recipes__inner {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
 .hero {
   border: 3px solid var(--ink);
   border-radius: 36px;
-  background: linear-gradient(140deg, var(--surface-bright) 0%, var(--surface-accent) 100%);
+  background: var(--surface-bright);
   box-shadow: 14px 14px 0 var(--shadow);
   padding: clamp(1.6rem, 3vw, 2.6rem);
   display: grid;
@@ -12,13 +23,23 @@
   margin: clamp(0.5rem, 2vw, 1.5rem) auto clamp(3.5rem, 8vw, 6rem);
 }
 
-.hero__tag {
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.35em;
-  margin: 0;
+.hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
+
+.hero__tag {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+
 
 .hero h1 {
   margin: 0;
@@ -38,6 +59,9 @@
   display: grid;
   gap: clamp(2rem, 4vw, 3rem);
   width: 100%;
+  max-width: min(1100px, 100%);
+  margin: 0 auto clamp(2rem, 6vw, 4rem);
+  padding-inline: clamp(0.75rem, 4vw, 1.5rem);
   transition: gap 220ms ease;
 }
 
@@ -84,7 +108,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  animation: menuReveal 220ms ease both;
+  justify-content: center;
 }
 
 .recipes-mini-card {
@@ -131,34 +155,43 @@
   display: grid;
   gap: 1.5rem;
   align-content: start;
+  justify-items: center;
+  width: 100%;
 }
 
 .recipes-interactive__main-card {
-  animation: cardExpand 240ms ease both;
+  width: min(720px, 100%);
 }
 
-.recipes-interactive__reset {
-  justify-self: start;
+.recipes-interactive__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  width: min(720px, 100%);
+}
+
+.recipes-interactive__actions button {
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: var(--surface-accent);
+  background: var(--surface);
   font-family: inherit;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 0.55rem 1.4rem;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
   transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-  box-shadow: 8px 8px 0 var(--shadow);
+  box-shadow: 6px 6px 0 var(--shadow);
 }
 
-.recipes-interactive__reset:hover,
-.recipes-interactive__reset:focus-visible {
+.recipes-interactive__actions button:hover,
+.recipes-interactive__actions button:focus-visible {
   transform: translate(-4px, -4px);
-  background: var(--surface-bright);
+  background: var(--surface-accent);
 }
 
-.recipes-interactive__reset:focus-visible {
+.recipes-interactive__actions button:focus-visible {
   outline: 3px solid var(--ink);
   outline-offset: 4px;
 }
@@ -170,32 +203,80 @@
   text-transform: uppercase;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
+  .recipes {
+    place-items: start;
+    padding-inline: clamp(0.5rem, 5vw, 1rem);
+  }
+
+  .recipes__inner {
+    width: 100%;
+    margin: 0;
+  }
+
+  .hero {
+    border-radius: 24px;
+    box-shadow: 10px 10px 0 var(--shadow);
+    margin: 1rem 0 2.5rem;
+    padding: clamp(1.25rem, 6vw, 1.75rem);
+    max-width: 100%;
+  }
+
+  .hero__tag {
+    letter-spacing: 0.25em;
+  }
+
+  .hero__lead {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .recipes-interactive {
+    gap: 2rem;
+    padding-inline: 0;
+  }
+
   .recipes-interactive__grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .recipes-card-trigger {
+    justify-self: start;
+  }
+
+  .recipes-interactive__mini {
+    flex-direction: column;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  .recipes-mini-card {
+    width: 100%;
+    max-width: 320px;
+    min-width: 0;
+    justify-content: space-between;
+    padding: 0.85rem 1.1rem;
+    box-shadow: 8px 8px 0 var(--shadow);
+  }
+
+  .recipes-interactive__main {
+    gap: 1.2rem;
+    padding-inline: clamp(0.5rem, 5vw, 1rem);
+  }
+
+  .recipes-interactive__actions {
+    justify-content: stretch;
+  }
+
+  .recipes-interactive__actions button {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 }
 
-@keyframes menuReveal {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes cardExpand {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+@media (max-width: 420px) {
+  .hero h1 {
+    font-size: clamp(1.8rem, 9vw, 2.2rem);
   }
 }
