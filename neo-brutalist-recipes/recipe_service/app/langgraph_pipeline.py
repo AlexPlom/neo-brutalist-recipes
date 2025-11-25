@@ -101,7 +101,7 @@ def _call_llm(state: RecipeState) -> RecipeState:
     )
     messages = [
         SystemMessage(
-            content="You are an expert Balkan chef who writes concise, structured recipes."
+            content="You are an expert chef who writes concise, structured recipes based on the country provided."
         ),
         HumanMessage(content=state["prompt"]),
     ]

@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "4200:80"
+    networks:
+      - internal
+    depends_on:
+      - backend
+
+  backend:
+    build: ./recipe_service
+    env_file:
+      - ./recipe_service/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://recipes:recipes@db:5435/recipes
+    ports:
+      - "8000:8000"
+    networks:
+      - internal
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16
+    command: -p 5435
+    environment:
+      POSTGRES_DB: recipes
+      POSTGRES_USER: recipes
+      POSTGRES_PASSWORD: recipes
+    ports:
+      - "5435:5435"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U recipes -d recipes -p 5435" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+    volumes:
+      - recipes-data:/var/lib/postgresql/data
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  recipes-data:
