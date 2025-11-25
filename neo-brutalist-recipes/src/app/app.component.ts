@@ -15,6 +15,21 @@ import { CountryService } from './application/services/country.service';
 })
 export class AppComponent {
   readonly currentYear = new Date().getFullYear();
+
+  private readonly quotes = [
+    '“A revolution is not a dinner party… it is an act of violence by which one class overthrows another.”',
+    '“Political power grows out of the barrel of a gun.”',
+    '“To read too many books is harmful.”',
+    '“People who try to avoid struggle will eventually be crushed by it.”',
+    '“The enemy advances, we retreat. The enemy camps, we harass. The enemy tires, we attack. The enemy retreats, we pursue.”',
+    '“Fight no battle you are not sure of winning.”',
+    '“Without destruction there can be no construction.”',
+    '“Seize the day, seize the hour.”',
+    '“If you want knowledge, you must take part in the practice of changing reality.”',
+    '“Dare to struggle, dare to win.”',
+  ];
+
+  readonly randomQuote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
   private readonly getThemes = inject(GetThemesUseCase);
   private readonly watchActiveTheme = inject(WatchActiveThemeUseCase);
   private readonly setActiveTheme = inject(SetActiveThemeUseCase);
